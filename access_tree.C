@@ -37,7 +37,7 @@ Double_t totalJets;
 int totalConstituents=0;
 Int_t nPions = 0, nPionBars = 0, nKaons = 0, nKaonBars = 0;
 Int_t nProtons = 0, nProtonBars = 0, nElectrons = 0, nPositrons = 0;
-double x, Q2;
+double x, Q2, W2, y;
 vector<PseudoJet> particles;
 TLorentzVector part;
 Int_t jetsize =0;
@@ -74,7 +74,11 @@ for(Int_t i=0;i<nEntries;i++)
 {
     tree->GetEntry(i);
     Q2 = (Double_t) event->GetQ2();
+    W2 = (Double_t) event->GetW2();
     x = (Double_t) event->GetX();
+    y = (Double_t) event->GetY();
+    if (W2 <= 10) continue; 
+    if (y>= 0.85 || y<=0.1) continue; 
     //printf("For Event %d, Q^2 = %.3f GeV^2!\n",i,Q2);
     hxVsQ2->Fill(x, Q2);
     nParticles = event->GetNTracks();
